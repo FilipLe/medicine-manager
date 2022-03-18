@@ -1,14 +1,17 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import java.awt.Font;
 
-public class AdminIndex {
+public class AdminIndex extends HomeScreen{
 
 	private JFrame frame;
 
@@ -33,16 +36,64 @@ public class AdminIndex {
 	 */
 	public AdminIndex() {
 		initialize();
+		time();
+		date();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Equipment Management System");
+		frame = new JFrame("Medicine Manager — Admin Index Screen");
+		//Frame light blue background
+		frame.getContentPane().setBackground(new Color(135, 206, 235));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		/*
+		 * --------------------------------------------------------------------------------
+		 */
+		
+		/*
+		 * TIME
+		 */
+		//Area which displays current time
+		lbltime = new JLabel("03:12:47");
+		lbltime.setFont(new Font("Lucida Grande", Font.BOLD, 41));
+		lbltime.setBounds(125, -1, 204, 68);
+		frame.getContentPane().add(lbltime);
+				
+		//Area which displays current date
+		lblDate = new JLabel("Wednesday, 10-07-2021");
+		lblDate.setBounds(149, 63, 173, 17);
+		frame.getContentPane().add(lblDate);
+			
+		//Label for AM or PM
+		lblAMorPM = new JLabel("PM");
+		lblAMorPM.setFont(new Font("Lucida Grande", Font.BOLD, 17));
+		lblAMorPM.setBounds(310, 33, 61, 16);
+		frame.getContentPane().add(lblAMorPM);
+		
+		
+		/*
+		 * --------------------------------------------------------------------------------
+		 */
+		
+		/*
+		 * DESIGN
+		 */
+		//Logo Icon
+		JLabel lblLogo = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/MedicineManager/src/NguyenLogo.png"));
+		lblLogo.setBounds(3, 0, 100, 93);
+		frame.getContentPane().add(lblLogo);
+						
+		//Dark blue ribbon on top
+		JPanel blueBackground = new JPanel();
+		//background color of ribbon should be 0x00829b
+		blueBackground.setBackground(new Color(0x00829b));
+		blueBackground.setBounds(0, -1, 450, 93);
+		frame.getContentPane().add(blueBackground);
 		
 		/*
 		 * Option to create user
@@ -56,7 +107,7 @@ public class AdminIndex {
 				AdminAddUsers.main(null);
 			}
 		});
-		btnCreateUser.setBounds(18, 26, 412, 53);
+		btnCreateUser.setBounds(54, 122, 344, 39);
 		frame.getContentPane().add(btnCreateUser);
 		
 		
@@ -72,7 +123,7 @@ public class AdminIndex {
 				AdminEditUser.main(null);
 			}
 		});
-		btnEditUsers.setBounds(18, 100, 412, 53);
+		btnEditUsers.setBounds(54, 161, 344, 39);
 		frame.getContentPane().add(btnEditUsers);
 		
 		
@@ -89,7 +140,7 @@ public class AdminIndex {
 				EquipmentDatabase.main(null);
 			}
 		});
-		btnAccessEquipmentDatabase.setBounds(18, 166, 412, 53);
+		btnAccessEquipmentDatabase.setBounds(54, 202, 344, 39);
 		frame.getContentPane().add(btnAccessEquipmentDatabase);
 		
 		/*
@@ -113,7 +164,7 @@ public class AdminIndex {
 		 */
 		JLabel lblSelectAction = new JLabel("Select Action:");
 		lblSelectAction.setFont(new Font("Lucida Grande", Font.BOLD, 16));
-		lblSelectAction.setBounds(18, 6, 241, 16);
+		lblSelectAction.setBounds(18, 100, 241, 16);
 		frame.getContentPane().add(lblSelectAction);
 	}
 
