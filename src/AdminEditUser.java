@@ -67,7 +67,7 @@ public class AdminEditUser {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Equipment Management System");
+		frame = new JFrame("Medicine Manager — Edit User Screen");
 		frame.getContentPane().setBackground(new Color(135, 206, 235));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
