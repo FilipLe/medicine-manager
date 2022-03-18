@@ -214,8 +214,8 @@ public class UserLoginScreen extends HomeScreen {
 							//Close current window
 							frame.dispose();
 							
-							//Take user to borrowing screen
-							EquipmentsTeachers.main(null);
+							//Take user to intake screen
+							MedicationUsers.main(null);
 						}			
 						//Increment by 1 to move to next user
 						counter++;
@@ -288,8 +288,8 @@ public class UserLoginScreen extends HomeScreen {
 							//Close current window
 							frame.dispose();
 							
-							//Take user to borrowing screen
-							EquipmentsTeachers.main(null);
+							//Take user to intake screen
+							MedicationUsers.main(null);
 						}			
 						//Increment by 1 to move to next user
 						counter++;
