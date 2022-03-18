@@ -104,7 +104,7 @@ public class AdminIndex extends HomeScreen{
 				//close current screen
 				frame.dispose();
 				//Take to create user screen
-				AdminAddUsers.main(null);
+				AdminAddUserScreen.main(null);
 			}
 		});
 		btnCreateUser.setBounds(54, 122, 344, 39);
