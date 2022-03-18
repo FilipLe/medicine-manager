@@ -56,7 +56,7 @@ public class UIMain {
 		frame.getContentPane().setLayout(null);
 		
 		//Logo Icon
-		JLabel lblLogo = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/MedicineManager/src/NguyenLogo.png"));
+		JLabel lblLogo = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/Medicine_Manager_REAL/src/NguyenLogo.png"));
 		lblLogo.setBounds(3, 0, 100, 93);
 		frame.getContentPane().add(lblLogo);
 		
