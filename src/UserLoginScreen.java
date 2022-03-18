@@ -56,7 +56,7 @@ public class UserLoginScreen extends HomeScreen {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Equipment Management System");
+		frame = new JFrame("Medicine Manager — User Login Screen");
 		//Frame light blue background
 		frame.getContentPane().setBackground(new Color(135, 206, 235));
 		frame.setBounds(100, 100, 450, 300);
