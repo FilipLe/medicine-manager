@@ -22,21 +22,22 @@ import java.awt.Color;
 public class EquipmentsTeachers {
 
 	/*
-	 * TEACHER'S BORROWING SCREEN
+	 * USER'S INTAKE SCREEN
 	 */
 		
 	private JFrame frame;
-	private JTextField textBorrowStatus;
-	private JTextField textField_EquipmentType;
-	private JTextField textField_ITEM_ID;
-	public boolean available;
+	private JTextField textQuantity;
+	private JTextField textField_MedicineType;
+	private JTextField textField_ITEM_NAME;
 	private EquipmentTableModel tableModel;
-	private EquipmentClass clickedEquipment;
+	private EquipmentClass clickedMedication;
 	private String currentUser;
 	private String currentUserID;
-	private String selectedEquipmentID;
-	private String selectedEquipmentType;
+	private String selectedMedicineName;
+	private String selectedMedicineType;
+	private String selectedMedicineQuantity;
 	private int clickedItemPosition;
+	private int currentQuantity;
 
 	/**
 	 * Launch the application.
@@ -92,40 +93,38 @@ public class EquipmentsTeachers {
                 System.out.println("\n");
                 
                 
-                //Accessing the outer most Child node ==> The Item ID
-                String itemId = path.getPathComponent(pathCount-1).toString();
+                //Accessing the outer most Child node ==> The Medication Name
+                String itemName = path.getPathComponent(pathCount-1).toString();
                 
-                //Accessing the second outer most child node ==> equipment type
-                String equipmentType = path.getPathComponent(pathCount-2).toString();
+                //Accessing the second outer most child node ==> medication type
+                String medicineType = path.getPathComponent(pathCount-2).toString();
                 
-                
-                //Only if the item Id clicked is an integer, we display on the information board
-                if(isInteger(itemId) == true) {
-                	//Loading in JSON to check list of equipments and their properties
-                	tableModel = new EquipmentTableModel();
-					tableModel.load();
-					
-					//Looping through the equipments until we find the right one
-					int tableSize = tableModel.getRowCount();
-					int counter = 0;
-					boolean found = false;
-					while(found == false && counter < tableSize) {
-						EquipmentClass equipment = tableModel.getEquipment(counter);
-						if(itemId.equals(equipment.getID())) {
-							found = true;
-							clickedItemPosition = counter;
-						}
-						counter++;
+
+            	//Loading in JSON to check list of medications and their properties
+            	tableModel = new EquipmentTableModel();
+				tableModel.load();
+				
+				//Looping through the medications until we find the right one
+				int tableSize = tableModel.getRowCount();
+				int counter = 0;
+				boolean found = false;
+				while(found == false && counter < tableSize) {
+					EquipmentClass medication = tableModel.getMedication(counter);
+					if(itemName.equals(medication.getName())) {
+						found = true;
+						clickedItemPosition = counter;
 					}
-					
-					//Extract all the properties of that equipment
-					clickedEquipment = tableModel.getEquipment(clickedItemPosition);
-					
-					//Set the fields to corresponding clicked item
-	                textField_EquipmentType.setText(equipmentType);
-					textField_ITEM_ID.setText(itemId);
-					textBorrowStatus.setText(clickedEquipment.getStatus());
-                }
+					counter++;
+				}
+				
+				//Extract all the properties of that medication
+				clickedMedication = tableModel.getMedication(clickedItemPosition);
+				
+				//Set the fields to corresponding clicked item
+                textField_MedicineType.setText(medicineType);
+				textField_ITEM_NAME.setText(itemName);
+				textQuantity.setText(clickedMedication.getQuantity());
+  
             }
         };
     }
@@ -141,7 +140,7 @@ public class EquipmentsTeachers {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Equipment Management System");
+		frame = new JFrame("Medicine Manager");
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -153,7 +152,7 @@ public class EquipmentsTeachers {
 		/*
 		 * Parent node
 		 */
-		DefaultMutableTreeNode equipmentTree=new DefaultMutableTreeNode("Equipment");  
+		DefaultMutableTreeNode medicationTree=new DefaultMutableTreeNode("Medicine");  
 		
 		/*
 	     *--------------------------------------------------------------------------------------------- 
@@ -162,17 +161,23 @@ public class EquipmentsTeachers {
 		/*
 		 * Child 1 
 		 */
-	    DefaultMutableTreeNode testTubes=new DefaultMutableTreeNode("Test Tubes");  
-	    DefaultMutableTreeNode beakers=new DefaultMutableTreeNode("Beakers");  
-	    DefaultMutableTreeNode funnels=new DefaultMutableTreeNode("Funnels");  
-	    DefaultMutableTreeNode cylinder=new DefaultMutableTreeNode("Graduated Cylinders");  
-	    DefaultMutableTreeNode thermometer=new DefaultMutableTreeNode("Thermometers");  
+	    DefaultMutableTreeNode painKillers=new DefaultMutableTreeNode("Pain Killers");//test tubes --> pain killers
+	    DefaultMutableTreeNode diabetes=new DefaultMutableTreeNode("Diabetes"); //beakers --> diabetes 
+	    DefaultMutableTreeNode fever=new DefaultMutableTreeNode("Fever Reducer");  //fever --> fever reducer
+	    DefaultMutableTreeNode stomach=new DefaultMutableTreeNode("Stomach Pain");  //graduated stomachs --> stomach pain
+	    DefaultMutableTreeNode cold=new DefaultMutableTreeNode("Common Cold");
+	    DefaultMutableTreeNode supplements=new DefaultMutableTreeNode("Supplements");
+	    DefaultMutableTreeNode skin=new DefaultMutableTreeNode("Skin-related");
+	    DefaultMutableTreeNode prescription=new DefaultMutableTreeNode("Prescription Drugs");  //thermometers --> special prescription drugs
 	    //Adding child nodes to below parent
-	    equipmentTree.add(testTubes);  
-	    equipmentTree.add(beakers);  
-	    equipmentTree.add(funnels);  
-	    equipmentTree.add(cylinder);  
-	    equipmentTree.add(thermometer);  
+	    medicationTree.add(painKillers);  
+	    medicationTree.add(diabetes);  
+	    medicationTree.add(fever);  
+	    medicationTree.add(stomach);
+	    medicationTree.add(cold);
+	    medicationTree.add(supplements);
+	    medicationTree.add(skin);
+	    medicationTree.add(prescription);  
 	    
 	    /*
 	     *--------------------------------------------------------------------------------------------- 
@@ -181,57 +186,78 @@ public class EquipmentsTeachers {
 	    /*
 	     * Child nodes 2
 	     */
+	    	    
+	    /*
+	     * Test Tubes --> Pain Killers
+	     */
+	    DefaultMutableTreeNode aspirin=new DefaultMutableTreeNode("Aspirin");    
+	    DefaultMutableTreeNode fentanyl=new DefaultMutableTreeNode("Fentanyl");  
+	    DefaultMutableTreeNode nurofen=new DefaultMutableTreeNode("Nurofen");  
+	    painKillers.add(aspirin); painKillers.add(fentanyl); painKillers.add(nurofen);      
 	    
 	    /*
-	     * Test Tubes
+	     * Beakers --> Diabetes
 	     */
-	    DefaultMutableTreeNode testTube1000=new DefaultMutableTreeNode("1000");  
-	    DefaultMutableTreeNode testTube1001=new DefaultMutableTreeNode("1001");  
-	    DefaultMutableTreeNode testTube1002=new DefaultMutableTreeNode("1002");  
-	    DefaultMutableTreeNode testTube1003=new DefaultMutableTreeNode("1003");  
-	    testTubes.add(testTube1000); testTubes.add(testTube1001); testTubes.add(testTube1002); testTubes.add(testTube1003);      
+	    DefaultMutableTreeNode glucophage=new DefaultMutableTreeNode("Glucophage500");  
+	    DefaultMutableTreeNode trajenta=new DefaultMutableTreeNode("Trajenta");  
+	    DefaultMutableTreeNode diben=new DefaultMutableTreeNode("Diben"); 
+	    diabetes.add(glucophage);diabetes.add(trajenta);diabetes.add(diben);
 	    
 	    /*
-	     * Beakers
+	     * Funnels --> Fever Reducer
 	     */
-	    DefaultMutableTreeNode beaker2090=new DefaultMutableTreeNode("2090");  
-	    DefaultMutableTreeNode beaker2091=new DefaultMutableTreeNode("2091");  
-	    DefaultMutableTreeNode beaker2092=new DefaultMutableTreeNode("2092");  
-	    DefaultMutableTreeNode beaker2093=new DefaultMutableTreeNode("2093"); 
-	    beakers.add(beaker2090);beakers.add(beaker2091);beakers.add(beaker2092);beakers.add(beaker2093);
+	    DefaultMutableTreeNode paracetamol=new DefaultMutableTreeNode("Paracetamol");  
+	    DefaultMutableTreeNode ibuprofenFever=new DefaultMutableTreeNode("Ibuprofen");  
+	    DefaultMutableTreeNode naproxen=new DefaultMutableTreeNode("Naproxen");  
+	    fever.add(paracetamol);fever.add(ibuprofenFever);fever.add(naproxen);
 	    
 	    /*
-	     * Funnels
+	     * Graduated Cylinders --> Stomach Pain
 	     */
-	    DefaultMutableTreeNode funnel3040=new DefaultMutableTreeNode("3040");  
-	    DefaultMutableTreeNode funnel3041=new DefaultMutableTreeNode("3041");  
-	    DefaultMutableTreeNode funnel3042=new DefaultMutableTreeNode("3042");  
-	    DefaultMutableTreeNode funnel3043=new DefaultMutableTreeNode("3043"); 
-	    funnels.add(funnel3040);funnels.add(funnel3041);funnels.add(funnel3042);funnels.add(funnel3043);
+	    DefaultMutableTreeNode loperamid=new DefaultMutableTreeNode("LoperamidSTADA");
+	    DefaultMutableTreeNode enterogermina=new DefaultMutableTreeNode("Enterogermina");
+	    DefaultMutableTreeNode smecta=new DefaultMutableTreeNode("Smecta");
+	    stomach.add(loperamid);stomach.add(enterogermina);stomach.add(smecta);
 	    
 	    /*
-	     * Graduated Cylinders
+	     * Common Cold
 	     */
-	    DefaultMutableTreeNode cylinder4080=new DefaultMutableTreeNode("4080");
-	    DefaultMutableTreeNode cylinder4081=new DefaultMutableTreeNode("4081");
-	    DefaultMutableTreeNode cylinder4082=new DefaultMutableTreeNode("4082");
-	    DefaultMutableTreeNode cylinder4083=new DefaultMutableTreeNode("4083");
-	    cylinder.add(cylinder4080);cylinder.add(cylinder4081);cylinder.add(cylinder4082);cylinder.add(cylinder4083);
+	    DefaultMutableTreeNode colgrip=new DefaultMutableTreeNode("Colgrip");
+	    DefaultMutableTreeNode strepsil=new DefaultMutableTreeNode("Strepsil");
+	    DefaultMutableTreeNode fervex=new DefaultMutableTreeNode("Fervex");
+	    cold.add(colgrip);cold.add(strepsil);cold.add(fervex);
 	    
 	    /*
-	     * Thermometers
+	     * Supplements 
 	     */
-	    DefaultMutableTreeNode therm5100=new DefaultMutableTreeNode("5100");
-	    DefaultMutableTreeNode therm5101=new DefaultMutableTreeNode("5101");
-	    DefaultMutableTreeNode therm5102=new DefaultMutableTreeNode("5102");
-	    DefaultMutableTreeNode therm5103=new DefaultMutableTreeNode("5103");
-	    thermometer.add(therm5100);thermometer.add(therm5101);thermometer.add(therm5102);thermometer.add(therm5103);
+	    DefaultMutableTreeNode rutinoscrobin=new DefaultMutableTreeNode("Rutinoscrobin");
+	    DefaultMutableTreeNode sema=new DefaultMutableTreeNode("SEMALAB");
+	    DefaultMutableTreeNode biovital=new DefaultMutableTreeNode("Biovital");
+	    DefaultMutableTreeNode magnesium=new DefaultMutableTreeNode("MagnesiumCitrate");
+	    supplements.add(rutinoscrobin);supplements.add(sema);supplements.add(biovital);supplements.add(magnesium);
+	    
+	    /*
+	     * Dermatological
+	     */
+	    DefaultMutableTreeNode ovixan=new DefaultMutableTreeNode("Ovixan");
+	    DefaultMutableTreeNode dexapolcort=new DefaultMutableTreeNode("Dexapolcort");
+	    DefaultMutableTreeNode dexyane=new DefaultMutableTreeNode("Dexyane");
+	    DefaultMutableTreeNode pimafucort=new DefaultMutableTreeNode("Pimafucort");
+	    skin.add(ovixan);skin.add(dexapolcort);skin.add(dexyane);skin.add(pimafucort);
+	    
+	    /*
+	     * Thermometers --> Special Prescription Drugs
+	     */
+	    DefaultMutableTreeNode symex=new DefaultMutableTreeNode("Symex");
+	    DefaultMutableTreeNode penicillin=new DefaultMutableTreeNode("Penicillin");
+	    DefaultMutableTreeNode nitrofurantoin=new DefaultMutableTreeNode("Nitrofurantoin");
+	    prescription.add(symex);prescription.add(penicillin);prescription.add(nitrofurantoin);
 	    
 	    /*
 	     *--------------------------------------------------------------------------------------------- 
 	     */
 	    
-	    JTree tree = new JTree(equipmentTree);
+	    JTree tree = new JTree(medicationTree);
 		scrollPane.setViewportView(tree);
 		
 		//Using listener
@@ -262,85 +288,86 @@ public class EquipmentsTeachers {
 		btnLogOut.setBounds(353, 237, 91, 29);
 		frame.getContentPane().add(btnLogOut);
 		
-		JLabel labelStatus = new JLabel("Item Status:");
-		labelStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 8));
-		labelStatus.setBounds(264, 91, 86, 16);
-		frame.getContentPane().add(labelStatus);
+		JLabel lblQuantity = new JLabel("Item Quantity:");
+		lblQuantity.setFont(new Font("Lucida Grande", Font.PLAIN, 8));
+		lblQuantity.setBounds(264, 91, 86, 16);
+		frame.getContentPane().add(lblQuantity);
 		
-		//Box to display borrow status of clicked item
-		textBorrowStatus = new JTextField();
-		textBorrowStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		textBorrowStatus.setColumns(10);
-		textBorrowStatus.setBounds(325, 90, 111, 16);
-		frame.getContentPane().add(textBorrowStatus);
+		//Box to display quantity of clicked item
+		textQuantity = new JTextField();
+		textQuantity.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		textQuantity.setColumns(10);
+		textQuantity.setBounds(325, 90, 111, 16);
+		frame.getContentPane().add(textQuantity);
 		
 		//Clear button
 		JButton btnClear = new JButton("Un-select");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textField_EquipmentType.setText(null);
-				textField_ITEM_ID.setText(null);
-				textBorrowStatus.setText(null);
+				textField_MedicineType.setText(null);
+				textField_ITEM_NAME.setText(null);
+				textQuantity.setText(null);
 			}
 		});
 		btnClear.setBounds(274, 206, 148, 29);
 		frame.getContentPane().add(btnClear);
 		
-		JLabel labelItemName = new JLabel("Equipment Type:");
-		labelItemName.setFont(new Font("Lucida Grande", Font.PLAIN, 8));
-		labelItemName.setBounds(264, 35, 86, 16);
-		frame.getContentPane().add(labelItemName);
+		JLabel lblType = new JLabel("Medicine Type:");
+		lblType.setFont(new Font("Lucida Grande", Font.PLAIN, 8));
+		lblType.setBounds(264, 35, 86, 16);
+		frame.getContentPane().add(lblType);
 		
-		//Box to display equipment name of clicked item
-		textField_EquipmentType = new JTextField();
-		textField_EquipmentType.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
-		textField_EquipmentType.setColumns(10);
-		textField_EquipmentType.setBounds(335, 34, 101, 16);
-		frame.getContentPane().add(textField_EquipmentType);
+		//Box to display medication type of clicked item
+		textField_MedicineType = new JTextField();
+		textField_MedicineType.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
+		textField_MedicineType.setColumns(10);
+		textField_MedicineType.setBounds(335, 34, 101, 16);
+		frame.getContentPane().add(textField_MedicineType);
 		
-		JLabel lblEquipmentId = new JLabel("Equipment ID:");
-		lblEquipmentId.setFont(new Font("Lucida Grande", Font.PLAIN, 8));
-		lblEquipmentId.setBounds(264, 63, 86, 16);
-		frame.getContentPane().add(lblEquipmentId);
+		JLabel lblMedicationName = new JLabel("Medicine Name:");
+		lblMedicationName.setFont(new Font("Lucida Grande", Font.PLAIN, 8));
+		lblMedicationName.setBounds(264, 63, 86, 16);
+		frame.getContentPane().add(lblMedicationName);
 		
-		//Box to display equipment ID of clicked item
-		textField_ITEM_ID = new JTextField();
-		textField_ITEM_ID.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		textField_ITEM_ID.setColumns(10);
-		textField_ITEM_ID.setBounds(325, 63, 111, 16);
-		frame.getContentPane().add(textField_ITEM_ID);
+		//Box to display medication name of clicked item
+		textField_ITEM_NAME = new JTextField();
+		textField_ITEM_NAME.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		textField_ITEM_NAME.setColumns(10);
+		textField_ITEM_NAME.setBounds(325, 63, 111, 16);
+		frame.getContentPane().add(textField_ITEM_NAME);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(259, 23, 185, 103);
 		frame.getContentPane().add(panel);
 		
-		JLabel lblEquipment = new JLabel("Equipment Information:");
-		lblEquipment.setFont(new Font("Lucida Grande", Font.BOLD | Font.ITALIC, 12));
-		lblEquipment.setBounds(264, 6, 162, 16);
-		frame.getContentPane().add(lblEquipment);
+		JLabel lblMedication = new JLabel("Medication Information:");
+		lblMedication.setFont(new Font("Lucida Grande", Font.BOLD | Font.ITALIC, 12));
+		lblMedication.setBounds(264, 6, 162, 16);
+		frame.getContentPane().add(lblMedication);
 		
 		/*
-		 * BORROW BUTTON
+		 * Take Medicine BUTTON
 		 */
-		JButton btnBorrow = new JButton("BORROW");
+		JButton btnIntake = new JButton("Take Medicine");
 		
 		//The user that is currently borrowing items --> so we look for them in json
 		currentUser = UserLoginScreen.loggedInUser;
 		currentUserID = UserLoginScreen.loggedInUserID;
 		
 		//Listener function
-		btnBorrow.addActionListener(new ActionListener() {
+		
+		btnIntake.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//if one of the fields is empty, inform them operation cannot be performed
-				if(textBorrowStatus.getText().equals("") || textField_EquipmentType.getText().equals("") || textField_ITEM_ID.getText().equals(""))
+				if(textQuantity.getText().equals("") || textField_MedicineType.getText().equals("") || textField_ITEM_NAME.getText().equals(""))
 				{
 					JOptionPane.showMessageDialog(null, "Please fill in every field","Please fill in every field", JOptionPane.ERROR_MESSAGE);
 				}
 				else 
 				{ 
 					//If it is not available
-					if(textBorrowStatus.getText().equals("borrowed")) {
+					if(textQuantity.getText().equals("0")) {
 						JOptionPane.showMessageDialog(null, "Item not available","Item not available", JOptionPane.ERROR_MESSAGE);
 					}
 					else {
@@ -349,50 +376,63 @@ public class EquipmentsTeachers {
 						//We delete it, and add it again, but with different HolderID, HolderName, and Status
 						//
 						
-						//Get the current selected item's ID
-						selectedEquipmentID = textField_ITEM_ID.getText();
+						//Get the current selected item's name
+						selectedMedicineName = textField_ITEM_NAME.getText();
 						
-						//Store the current selected item's Type
-						selectedEquipmentType = textField_EquipmentType.getText();
+						//Get the current selected item's Type
+						selectedMedicineType = textField_MedicineType.getText();
 						
+						//Get the current medicine quantity
+						selectedMedicineQuantity = textQuantity.getText();
+					
 						
-						//Loading in JSON to check list of equipments and their properties
+						//Loading in JSON to check list of medications and their properties
 	                	tableModel = new EquipmentTableModel();
 						tableModel.load();
 						
-						//Looping through the equipments until we find the right equipment with matching ID
+						//Looping through the list of medication until we find the right medicine with matching name
 						int tableSize = tableModel.getRowCount();
 						int counter = 0;
 						boolean found = false;
 						while(found == false && counter < tableSize) {
-							EquipmentClass equipment = tableModel.getEquipment(counter);
+							EquipmentClass medication = tableModel.getMedication(counter);
 							//Check if 
-							if(selectedEquipmentID.equals(equipment.getID())) {
+							if(selectedMedicineName.equals(medication.getName())) {
 								found = true;
 								clickedItemPosition = counter;
 							}
 							counter++;
 						}
 						
-						//Now we delete that equipment
+						//Now we delete that medicine
 						tableModel.removeRowAt(clickedItemPosition);
 						
-						//And add the equipment with same type, same ID, but new Holder Name, HolderID, and status
-						String equipmentType = selectedEquipmentType;
-						String equipmentID = selectedEquipmentID;
+						//And add the medicine with same type, same name, but new Holder Name, HolderID, and quantity
+						String medicineType = selectedMedicineType;
+						String medicineName = selectedMedicineName;
 						String newHolderName = currentUser;
 						String newHolderID = currentUserID;
-						String newStatus = "borrowed";
 						
-						//Create a new equipment based on that new info
-						EquipmentClass newEquipment = new EquipmentClass(equipmentType,equipmentID,newStatus,newHolderName,newHolderID);
-						tableModel.addEquipment(newEquipment);
+						if (isInteger(selectedMedicineQuantity) == true)
+						{
+							//convert to integer
+							currentQuantity = Integer.parseInt(selectedMedicineQuantity);
+							//Every intake, 1 medication is removed from total
+							currentQuantity -= 1;
+						}
+						
+						//Change that quantity in the system
+						String newQuantity = Integer.toString(currentQuantity);
+						
+						//Create a new medication based on that new info
+						EquipmentClass newEquipment = new EquipmentClass(medicineType,medicineName,newQuantity,newHolderName,newHolderID);
+						tableModel.addMedication(newEquipment);
 						
 						//Save the changes
 						tableModel.save();
 						
 						//Message Dialog Box
-						JOptionPane.showMessageDialog(null, "Item Borrowed Successfully!","Item Borrowed Successfully!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Medicine Taken Successfully!","Medicine Taken Successfully!", JOptionPane.INFORMATION_MESSAGE);
 						
 						//close the current window
 						frame.dispose();
@@ -403,7 +443,8 @@ public class EquipmentsTeachers {
 				}
 			}
 		});
-		btnBorrow.setBounds(264, 150, 162, 44);
-		frame.getContentPane().add(btnBorrow);
+		
+		btnIntake.setBounds(264, 150, 162, 44);
+		frame.getContentPane().add(btnIntake);
 	}
 }
