@@ -74,7 +74,7 @@ public class AdminAddUserScreen {
 		frame.getContentPane().setLayout(null);
 		
 		//Logo Icon
-		JLabel lblLogo = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/MedicineManager/src/NguyenLogo.png"));
+		JLabel lblLogo = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/Medicine_Manager_REAL/src/NguyenLogo.png"));
 		lblLogo.setBounds(3, 0, 100, 93);
 		frame.getContentPane().add(lblLogo);
 		
@@ -237,7 +237,7 @@ public class AdminAddUserScreen {
 		 * Help Info Icons
 		 */
 		//Import image
-		ImageIcon imageIcon = new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/MedicineManager/src/information_icon.png"); 
+		ImageIcon imageIcon = new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/Medicine_Manager_REAL/src/information_icon.png"); 
 		Image image = imageIcon.getImage();
 		//Rescale image (width, height, type scale)
 		Image newimg = image.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);  
