@@ -195,9 +195,9 @@ public class AdminAddUserScreen {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//If one of the fields is empty (that is why we use OR == ||)
-				if(	textField_userID.getText().trim().equals("")||
-					textField_Name.getText().trim().equals("")||
-					txtEnterAge.getText().trim().equals("")) 
+				if(	textField_userID.getText().trim().equals("0000")||
+					textField_Name.getText().trim().equals("Please enter user's name here")||
+					txtEnterAge.getText().trim().equals("Please enter user's age here")) 
 				{
 					JOptionPane.showMessageDialog(null, "There is an empty field. Please fill all fields to continue.","EMPTY FIELD", JOptionPane.ERROR_MESSAGE);
 				}
@@ -220,6 +220,9 @@ public class AdminAddUserScreen {
 					
 					//SAVING the user everytime we add the user
 					tableModel.save();	
+					
+					//Close the current window
+					frame.dispose();
 					
 					//Take user to Admin Index Main Screen
 					AdminIndex.main(null);
@@ -300,6 +303,26 @@ public class AdminAddUserScreen {
 		textField_userID.setColumns(10);
 		textField_userID.setBounds(238, 210, 61, 26);
 		frame.getContentPane().add(textField_userID);
+		
+		textField_userID.addFocusListener(new FocusAdapter(){
+			@Override
+			public void focusGained(FocusEvent e) {
+				//When user clicks on the placeholder, the text shown below disappears
+				if(textField_userID.getText().trim().equals("0000")) {
+					textField_userID.setForeground(Color.BLACK);
+					textField_userID.setText(""); 
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(textField_userID.getText().trim().equals("")) {
+					//If user did not type anything, when user clicks on different label, text appears in grey again
+					textField_userID.setForeground(Color.LIGHT_GRAY);
+					textField_userID.setText("0000"); 
+				}
+			}
+		});
+		
 		
 		//Generate button
 		JButton btnGenerate = new JButton("Generate");
