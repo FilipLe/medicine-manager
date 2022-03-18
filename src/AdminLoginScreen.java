@@ -102,7 +102,7 @@ public class AdminLoginScreen extends HomeScreen {
 		 * DESIGN
 		 */
 		//Logo Icon
-		JLabel lblLogo = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/MedicineManager/src/NguyenLogo.png"));
+		JLabel lblLogo = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/Medicine_Manager_REAL/src/NguyenLogo.png"));
 		lblLogo.setBounds(3, 0, 100, 93);
 		frame.getContentPane().add(lblLogo);
 						
@@ -338,12 +338,12 @@ public class AdminLoginScreen extends HomeScreen {
 		 * ICONS
 		 */
 		//Admin ID Icon
-		JLabel lblIconID = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/MedicineManager/src/adminIDIcon.png"));
+		JLabel lblIconID = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/Medicine_Manager_REAL/src/adminIDIcon.png"));
 		lblIconID.setBounds(25, 121, 42, 55);
 		frame.getContentPane().add(lblIconID);
 		
 		//Password ID Icon
-		JLabel lblPasswordIcon = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/MedicineManager/src/passwordIcon.png"));
+		JLabel lblPasswordIcon = new JLabel(new ImageIcon("/Users/nguyenle/workspace-2021-swing-applications/Medicine_Manager_REAL/src/passwordIcon.png"));
 		lblPasswordIcon.setBounds(25, 170, 42, 55);
 		frame.getContentPane().add(lblPasswordIcon);
 		
