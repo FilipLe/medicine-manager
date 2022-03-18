@@ -9,17 +9,17 @@ import com.github.cliftonlabs.json_simple.JsonObject;
  *
  */
 public class EquipmentClass {
-	private String type;
-	private String ID;
-	private String status;
+	private String type; //equipment type --> medicine type
+	private String name; //equipment ID --> medicine name
+	private String quantity; //availability status --> Qty — quantity in stock (INTEGER)
 	private String holderName;
 	private String holderID;
 	
 	//Constructor for Equipment
-	EquipmentClass(String type, String ID, String status, String holderName, String holderID){
+	EquipmentClass(String type, String name, String quantity, String holderName, String holderID){
 		this.type = type;
-		this.ID = ID;
-		this.status = status;
+		this.name = name;
+		this.quantity = quantity;
 		this.holderName = holderName;
 		this.holderID = holderID;
 	}
@@ -31,12 +31,12 @@ public class EquipmentClass {
 		return type;
 	}
 	
-	public String getID() {
-		return ID;
+	public String getName() {
+		return name;
 	}
 	
-	public String getStatus() {
-		return status;
+	public String getQuantity() {
+		return quantity;
 	}
 	
 	public String getHolderName(){
@@ -55,27 +55,28 @@ public class EquipmentClass {
 		//<key>:<value>
 		JsonObject properties = new JsonObject();
 		properties.put("type", type);
-		properties.put("status", status);
+		properties.put("quantity", quantity);
 		properties.put("holderName", holderName);
 		properties.put("holderID", holderID);
 		
 		/*
 		 * Format we want to save it in:
 		 * {
-		 * 	1014:{"name":"test tube","status":"unavailable","holder name":"Joe","holderID":"1292"},
-		 * 	2032:{"name":"beaker","status":"available","holder name":"null","holderID":"null"}
+		 * 	aspirin:{"type":"pain killers","quantity":"25","holder name":"Joe","holderID":"1292"},
+		 * 	fentanyl:{"type":"pain killers","quantity":"1","holder name":"null","holderID":"null"}
 		 * }
 		 */
 		return properties;
 	}
 	
 	//This is going to take a Json Object and return an equipment with all the data stored in that object
-	public static EquipmentClass fromJsonObject(String ID,JsonObject properties) {
-		//We use EquipmentID as Key because it is unique
+	public static EquipmentClass fromJsonObject(String name,JsonObject properties) {
+		
+		//We use Medicine Name as Key because it is unique (e.g. aspirin, ibuprofen, etc.)
 		String type = (String)properties.get("type");
-		String status = (String)properties.get("status");
+		String quantity = (String)properties.get("quantity");
 		String holderName = (String)properties.get("holderName");
 		String holderID = (String)properties.get("holderID");
-		return new EquipmentClass(type,ID,status,holderName,holderID);
+		return new EquipmentClass(type,name,quantity,holderName,holderID);
 	}
 }
