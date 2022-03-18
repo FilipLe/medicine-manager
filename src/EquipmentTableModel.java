@@ -13,57 +13,57 @@ import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
 
 public class EquipmentTableModel extends AbstractTableModel{
-	private EquipmentClass[] presetEquipment = new EquipmentClass[] 
+	private EquipmentClass[] presetMedications = new EquipmentClass[] 
 	{
 
 	};
 	
 	//Creating arrayList to store the users
-	private ArrayList<EquipmentClass> equipmentList = new ArrayList<>();
+	private ArrayList<EquipmentClass> medicationList = new ArrayList<>();
 	
 	//Add default to array
 	EquipmentTableModel()
 	{
-		equipmentList.addAll(Arrays.asList(presetEquipment));
+		medicationList.addAll(Arrays.asList(presetMedications));
 	}
 	
 
-	public EquipmentClass getEquipment(int rowIndex) {
-		return equipmentList.get(rowIndex);
+	public EquipmentClass getMedication(int rowIndex) {
+		return medicationList.get(rowIndex);
 	}
 	
 	
-	public void addEquipment(EquipmentClass newEquipment) {
+	public void addMedication(EquipmentClass newEquipment) {
 		//Adding new user into the table
-		equipmentList.add(newEquipment);
+		medicationList.add(newEquipment);
 		
 		//updates table
 		fireTableDataChanged();
 	}
 
 	public void removeRowAt(int row) {
-		equipmentList.remove(row);
+		medicationList.remove(row);
 	    //fireTableDataChanged();
-	    fireTableRowsDeleted(row - 1, equipmentList.size() - 1);
+	    fireTableRowsDeleted(row - 1, medicationList.size() - 1);
 	}
 	
 
 	/*
-	 * Column Headings (Name, UserID, Password
+	 * Column Headings
 	 */
 	public String getColumnName(int columnIndex) 
 	{
 		if(columnIndex == 0) 
 		{
-			return "Equipment Type";
+			return "Medicine Type";
 		}
 		else if(columnIndex == 1)
 		{
-			return "Equipment ID";
+			return "Medicine Name";
 		}
 		else if(columnIndex == 2)
 		{
-			return "Status";
+			return "Quantity";
 		}
 		else if(columnIndex == 3)
 		{
@@ -82,7 +82,7 @@ public class EquipmentTableModel extends AbstractTableModel{
 	
 	public int getRowCount() {
 		// Amount of users
-		return equipmentList.size();
+		return medicationList.size();
 	}
 
 
@@ -93,29 +93,29 @@ public class EquipmentTableModel extends AbstractTableModel{
 
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		EquipmentClass equipment = equipmentList.get(rowIndex);
+		EquipmentClass medication = medicationList.get(rowIndex);
 		/*
 		 * DISPLAYING INPUT ON TABLE
 		 */
 		if(columnIndex == 0) 
 		{
-			return equipment.getType();
+			return medication.getType();
 		}
 		else if(columnIndex == 1)
 		{
-			return equipment.getID();
+			return medication.getName();
 		}
 		else if(columnIndex == 2)
 		{
-			return equipment.getStatus();
+			return medication.getQuantity();
 		}
 		else if(columnIndex == 3)
 		{
-			return equipment.getHolderName();
+			return medication.getHolderName();
 		}
 		else if(columnIndex == 4)
 		{
-			return equipment.getHolderID();
+			return medication.getHolderID();
 		}
 		else
 		{
@@ -145,8 +145,8 @@ public class EquipmentTableModel extends AbstractTableModel{
 		JsonObject ja = new JsonObject();
 		
 		//For each user in the list of users, we will add them into the json array
-		for(EquipmentClass equipment : equipmentList) {
-			ja.put(equipment.getID(), equipment.toJsonObject());
+		for(EquipmentClass medication : medicationList) {
+			ja.put(medication.getName(), medication.toJsonObject());
 		}
 		
 		//Convert Json array to json text
@@ -190,15 +190,15 @@ public class EquipmentTableModel extends AbstractTableModel{
 		}
 		
 		for(Object key : rootObject.keySet()) {
-			String Id = key.toString();
-			//Obtaining JSON Object using ID, which is the key of the equipment object
-			JsonObject jo = (JsonObject)rootObject.get(Id);
+			String Name = key.toString();
+			//Obtaining JSON Object using unique name, which is the key of the medication object
+			JsonObject jo = (JsonObject)rootObject.get(Name);
 			
-			//Getting the JSON object of the equipment with matching ID
-			EquipmentClass equipment = EquipmentClass.fromJsonObject(Id, jo);
+			//Getting the JSON object of the medication with matching name
+			EquipmentClass medication = EquipmentClass.fromJsonObject(Name, jo);
 			
 			//add that user to the list of users
-			equipmentList.add(equipment);
+			medicationList.add(medication);
 		}
 	}
 }
