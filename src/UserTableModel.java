@@ -131,7 +131,7 @@ public class UserTableModel extends AbstractTableModel{
 	//Default path to save the data — home directory
 	private Path getDefaultPath() {
 		String home = System.getProperty("user.home");
-		return Paths.get(home).resolve("teachersNEW.json");
+		return Paths.get(home).resolve("userList.json");
 	}
 	
 	
