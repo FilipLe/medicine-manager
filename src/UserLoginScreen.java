@@ -19,12 +19,12 @@ import java.awt.Font;
 public class UserLoginScreen extends HomeScreen {
 	
 	/*
-	 * Teacher LOGIN SCREEN
+	 * User LOGIN SCREEN
 	 */
 
 	private JFrame frame;
-	private JTextField teacherID;
-	private JTextField teacherName;
+	private JTextField userID;
+	private JTextField userNAME;
 	private UserTableModel tableModel;
 	public static String loggedInUser;
 	public static String loggedInUserID;
@@ -114,26 +114,26 @@ public class UserLoginScreen extends HomeScreen {
 		lblTeacherID.setBounds(73, 190, 72, 16);
 		frame.getContentPane().add(lblTeacherID);
 		
-		teacherID = new JTextField();
-		teacherID.setColumns(10);
-		teacherID.setBounds(156, 185, 232, 26);
-		frame.getContentPane().add(teacherID);
+		userID = new JTextField();
+		userID.setColumns(10);
+		userID.setBounds(156, 185, 232, 26);
+		frame.getContentPane().add(userID);
 		
-		teacherID.addFocusListener(new FocusAdapter(){
+		userID.addFocusListener(new FocusAdapter(){
 			@Override
 			public void focusGained(FocusEvent e) {
 				//When user clicks on the placeholder, the text shown below disappears
-				if(teacherID.getText().trim().equals("Please enter teacherID here")) {
-					teacherID.setForeground(Color.BLACK);
-					teacherID.setText(""); 
+				if(userID.getText().trim().equals("Please enter userID here")) {
+					userID.setForeground(Color.BLACK);
+					userID.setText(""); 
 				}
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(teacherID.getText().trim().equals("")) {
+				if(userID.getText().trim().equals("")) {
 					//If user did not type anything, when user clicks on different label, text appears in grey again
-					teacherID.setForeground(Color.LIGHT_GRAY);
-					teacherID.setText("Please enter teacherID here"); 
+					userID.setForeground(Color.LIGHT_GRAY);
+					userID.setText("Please enter userID here"); 
 				}
 			}
 		});
@@ -145,8 +145,8 @@ public class UserLoginScreen extends HomeScreen {
 		JButton clearButton = new JButton("Clear");
 		clearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				teacherName.setText(null);
-				teacherID.setText(null); 
+				userNAME.setText(null);
+				userID.setText(null); 
 			}
 		});
 		clearButton.setBounds(84, 223, 117, 29);
@@ -163,13 +163,13 @@ public class UserLoginScreen extends HomeScreen {
 			public void actionPerformed(ActionEvent e) {
 				
 				//What happens if fields empty
-				if(teacherName.getText().equals("") || teacherID.getText().equals("")) {
+				if(userNAME.getText().equals("") || userID.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Please fill in every field","Please fill in every field", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					//Getting the user inputs
-					String userName = teacherName.getText();
-					String id = teacherID.getText();
+					String userName = userNAME.getText();
+					String id = userID.getText();
 					
 					//Accessing the table model
 					tableModel = new UserTableModel();
@@ -205,8 +205,8 @@ public class UserLoginScreen extends HomeScreen {
 							loggedInUserID = id;
 							
 							//Empty field entries
-							teacherName.setText(null);
-							teacherID.setText(null);
+							userNAME.setText(null);
+							userID.setText(null);
 							
 							//Message Dialog Box
 							JOptionPane.showMessageDialog(null, "Login Successful!","Login Successful", JOptionPane.INFORMATION_MESSAGE);
@@ -224,8 +224,8 @@ public class UserLoginScreen extends HomeScreen {
 					
 					//if they don't exist in table model, "exist" would still be false after looping through users
 					if(exist == false) {
-						teacherName.setText(null);
-						teacherID.setText(null);
+						userNAME.setText(null);
+						userID.setText(null);
 						JOptionPane.showMessageDialog(null, "Incorrect ID or password","Incorrect ID or password", JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -237,16 +237,16 @@ public class UserLoginScreen extends HomeScreen {
 		/*
 		 * Logging in using ENTER KEY
 		 */
-		teacherID.addActionListener(new java.awt.event.ActionListener() {
+		userID.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//What happens if fields empty
-				if(teacherName.getText().equals("") || teacherID.getText().equals("")) {
+				if(userNAME.getText().equals("") || userID.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Please fill in every field","Please fill in every field", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					//Getting the user inputs
-					String userName = teacherName.getText();
-					String id = teacherID.getText();
+					String userName = userNAME.getText();
+					String id = userID.getText();
 					
 					//Accessing the table model
 					tableModel = new UserTableModel();
@@ -279,8 +279,8 @@ public class UserLoginScreen extends HomeScreen {
 							
 							
 							//Empty field entries
-							teacherName.setText(null);
-							teacherID.setText(null);
+							userNAME.setText(null);
+							userID.setText(null);
 							
 							//Message Dialog Box
 							JOptionPane.showMessageDialog(null, "Login Successful!","Login Successful", JOptionPane.INFORMATION_MESSAGE);
@@ -298,8 +298,8 @@ public class UserLoginScreen extends HomeScreen {
 					
 					//if they don't exist in table model, "exist" would still be false after looping through users
 					if(exist == false) {
-						teacherName.setText(null);
-						teacherID.setText(null);
+						userNAME.setText(null);
+						userID.setText(null);
 						JOptionPane.showMessageDialog(null, "Incorrect ID or password","Incorrect ID or password", JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -313,26 +313,26 @@ public class UserLoginScreen extends HomeScreen {
 		lblName.setBounds(73, 140, 72, 16);
 		frame.getContentPane().add(lblName);
 		
-		teacherName = new JTextField();
-		teacherName.setColumns(10);
-		teacherName.setBounds(156, 135, 232, 26);
-		frame.getContentPane().add(teacherName);
+		userNAME = new JTextField();
+		userNAME.setColumns(10);
+		userNAME.setBounds(156, 135, 232, 26);
+		frame.getContentPane().add(userNAME);
 		
-		teacherName.addFocusListener(new FocusAdapter(){
+		userNAME.addFocusListener(new FocusAdapter(){
 			@Override
 			public void focusGained(FocusEvent e) {
 				//When user clicks on the placeholder, the text shown below disappears
-				if(teacherName.getText().trim().equals("Please enter your name here")) {
-					teacherName.setForeground(Color.BLACK);
-					teacherName.setText(""); 
+				if(userNAME.getText().trim().equals("Please enter your name here")) {
+					userNAME.setForeground(Color.BLACK);
+					userNAME.setText(""); 
 				}
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(teacherName.getText().trim().equals("")) {
+				if(userNAME.getText().trim().equals("")) {
 					//If user did not type anything, when user clicks on different label, text appears in grey again
-					teacherName.setForeground(Color.LIGHT_GRAY);
-					teacherName.setText("Please enter your name here"); 
+					userNAME.setForeground(Color.LIGHT_GRAY);
+					userNAME.setText("Please enter your name here"); 
 				}
 			}
 		});
