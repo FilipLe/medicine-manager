@@ -30,13 +30,6 @@ import javax.swing.Icon;
  * Home Screen of Application
  */
 
-/*
- * ISSUES TO FIX:
- * When IRL 10 AM --> Program shows 10:00
- * When IRL 10 PM --> Program also shows 10:00
- * 
- * Program does not distinguish difference between AM and PM
- */
 public class HomeScreen {
 
 	private JFrame frame;
