@@ -130,7 +130,7 @@ public class AdminIndex extends HomeScreen{
 		/*
 		 * Equipment database
 		 */
-		JButton btnAccessEquipmentDatabase = new JButton("Access Equipment Database");
+		JButton btnAccessEquipmentDatabase = new JButton("Access Medication Database");
 		btnAccessEquipmentDatabase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//close current frame
