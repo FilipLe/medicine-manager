@@ -16,14 +16,6 @@ import java.awt.Font;
 import javax.swing.JPanel;
 
 public class AdminEditUser {
-
-	/*
-	 * Admin Edit User Screen
-	 * 
-	 * WORK ON DELETING USER LINES 120-147
-	 * 
-	 * Lines 141-156 —-> Deleting users
-	 */
 	private JFrame frame;
 	private JTable table;
 	private UserTableModel tableModel;
