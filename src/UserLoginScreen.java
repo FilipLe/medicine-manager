@@ -77,7 +77,7 @@ public class UserLoginScreen extends HomeScreen {
 		frame.getContentPane().add(lbltime);
 				
 		//Area which displays current date
-		lblDate = new JLabel("Wednesday, 23-03-2022");
+		lblDate = new JLabel("Wednesday, 23-3-2022");
 		lblDate.setBounds(149, 63, 173, 17);
 		frame.getContentPane().add(lblDate);
 			
